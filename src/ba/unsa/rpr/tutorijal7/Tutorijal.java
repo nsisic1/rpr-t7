@@ -8,16 +8,17 @@ import java.util.Scanner;
 public class Tutorijal {
 
     public static void main(String[] args) {
-        /*ArrayList<Grad> gradovi;
+        ArrayList<Grad> gradovi;
         try {
             gradovi = ucitajGradove();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
         for (Grad g: gradovi) {
             System.out.println(g);
-        }*/
+        }
     }
 
     static ArrayList<Grad> ucitajGradove() throws Exception {
@@ -27,9 +28,7 @@ public class Tutorijal {
         try {
             ulaz = new Scanner(new FileReader("mjerenja.txt"));
         } catch (FileNotFoundException e) {
-            System.out.println("Datoteka mjerenja.txt ne postoji ili se ne može otvoriti");
-            System.out.println("Greška: " + e);
-            return gradovi;
+            throw new Exception("Datoteka mjerenja.txt ne postoji ili se ne može otvoriti.\n" + "Greska: " + e);
         }
 
         try {
@@ -51,8 +50,7 @@ public class Tutorijal {
                 gradovi.add(grad);
             }
         } catch (Exception e) {
-            System.out.println("Problem pri čitanju/pisanju podataka.");
-            System.out.println("Greška: " + e);
+            throw new Exception("Problem pri čitanju/pisanju podataka.\n" + "Greska: " + e);
         } finally {
             ulaz.close();
         }

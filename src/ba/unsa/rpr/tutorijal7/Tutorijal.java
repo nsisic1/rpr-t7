@@ -1,8 +1,10 @@
 package ba.unsa.rpr.tutorijal7;
 
 import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -93,5 +95,15 @@ public class Tutorijal {
             }
         }
         return un;
+    }
+
+    public static void zapisiXml(UN un) {
+        try {
+            XMLEncoder izlaz = new XMLEncoder(new FileOutputStream("un.xml"));
+            izlaz.writeObject(un);
+            izlaz.close();
+        } catch(Exception e) {
+            System.out.println("Greška: " + e);
+        }
     }
 }

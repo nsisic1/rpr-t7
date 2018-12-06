@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Tutorijal {
 
     public static void main(String[] args) {
-        ArrayList<Grad> gradovi;
+        /*ArrayList<Grad> gradovi;
         try {
             gradovi = ucitajGradove();
         } catch (Exception e) {
@@ -22,7 +22,7 @@ public class Tutorijal {
 
         for (Grad g: gradovi) {
             System.out.println(g);
-        }
+        }*/
     }
 
     static ArrayList<Grad> ucitajGradove() throws Exception {

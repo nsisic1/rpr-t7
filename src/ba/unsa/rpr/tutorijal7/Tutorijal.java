@@ -1,5 +1,7 @@
 package ba.unsa.rpr.tutorijal7;
 
+import java.beans.XMLDecoder;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -68,5 +70,28 @@ public class Tutorijal {
             }
         }
         return count;
+    }
+
+    public static UN ucitajXml(ArrayList<Grad> gradovi) {
+        UN un = null;
+        try {
+            XMLDecoder ulaz = new XMLDecoder(new FileInputStream("drzave.xml"));
+            un = (UN) ulaz.readObject();
+            ulaz.close();
+        } catch (Exception e) {
+            System.out.println("Greška: " + e);
+        }
+
+        if (un == null) { // Treba li ovo
+            return null;
+        }
+        for (Drzava d : un.getDrzave()) {
+            for (Grad g : gradovi) {
+                if (g.getNaziv().equals(d.getGlavniGrad().getNaziv())) {
+                    d.getGlavniGrad().setTemperature(g.getTemperature());
+                }
+            }
+        }
+        return un;
     }
 }

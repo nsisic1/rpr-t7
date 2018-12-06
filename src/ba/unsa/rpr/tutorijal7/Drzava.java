@@ -2,11 +2,18 @@ package ba.unsa.rpr.tutorijal7;
 
 public class Drzava {
 
-    private String naziv = "";
-    private int brojStanovnika = 0;
-    private Double povrsina = (double) 0;
-    private String jedinicaZaPovrsinu = "";
+    private String naziv;
+    private int brojStanovnika;
+    private Double povrsina;
+    private String jedinicaZaPovrsinu;
     private Grad glavniGrad;
+
+    Drzava() {
+        naziv = "";
+        brojStanovnika = 0;
+        povrsina = (double) 0;
+        jedinicaZaPovrsinu = "";
+    }
 
     String getNaziv() {
         return naziv;

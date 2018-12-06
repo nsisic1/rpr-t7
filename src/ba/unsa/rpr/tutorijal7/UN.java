@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class UN {
 
-    private ArrayList<Drzava> drzave = new ArrayList<>();
+    private ArrayList<Drzava> drzave;
+
+    UN() {
+        drzave = new ArrayList<>();
+    }
 
     ArrayList<Drzava> getDrzave() {
         return drzave;

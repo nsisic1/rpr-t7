@@ -2,9 +2,15 @@ package ba.unsa.rpr.tutorijal7;
 
 public class Grad {
 
-    private String naziv = "";
-    private int brojStanovnika = 0;
-    private Double[] temperature = new Double[1000];
+    private String naziv;
+    private int brojStanovnika;
+    private Double[] temperature;
+
+    Grad() {
+        naziv = "";
+        brojStanovnika = 0;
+        temperature = new Double[1000];
+    }
 
     String getNaziv() {
         return naziv;

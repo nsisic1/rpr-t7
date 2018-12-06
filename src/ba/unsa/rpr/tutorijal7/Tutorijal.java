@@ -1,12 +1,18 @@
 package ba.unsa.rpr.tutorijal7;
 
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Tutorijal {
@@ -23,6 +29,13 @@ public class Tutorijal {
         for (Grad g: gradovi) {
             System.out.println(g);
         }*/
+
+        try {
+            zapisiXml(ucitajXml(ucitajGradove()));
+            System.out.println("Uspjeh!");
+        } catch (Exception e) {
+            System.out.println("Greska1: " + e.getMessage());
+        }
     }
 
     static ArrayList<Grad> ucitajGradove() throws Exception {
@@ -32,7 +45,7 @@ public class Tutorijal {
         try {
             ulaz = new Scanner(new FileReader("mjerenja.txt"));
         } catch (FileNotFoundException e) {
-            throw new Exception("Datoteka mjerenja.txt ne postoji ili se ne može otvoriti.\n" + "Greska: " + e);
+            throw new Exception("Datoteka mjerenja.txt ne postoji ili se ne može otvoriti.\n" + "Greska2: " + e);
         }
 
         try {
@@ -41,7 +54,7 @@ public class Tutorijal {
                 linija = ulaz.nextLine();
                 String[] parts = linija.split(",");
                 if (parts.length > 1001) {
-                    throw new ArrayIndexOutOfBoundsException("Vise od 1000 temperatura");
+                    throw new Exception("Vise od 1000 temperatura");
                 }
                 String nazivGrada = parts[0];
                 Double[] temperature = new Double[parts.length - 1];
@@ -54,7 +67,7 @@ public class Tutorijal {
                 gradovi.add(grad);
             }
         } catch (Exception e) {
-            throw new Exception("Problem pri čitanju/pisanju podataka.\n" + "Greska: " + e);
+            throw new Exception("Problem pri čitanju/pisanju podataka.\n" + "Greska3: " + e);
         } finally {
             ulaz.close();
         }
@@ -74,26 +87,72 @@ public class Tutorijal {
         return count;
     }
 
-    public static UN ucitajXml(ArrayList<Grad> gradovi) {
-        UN un = null;
+    public static UN ucitajXml(ArrayList<Grad> gradovi) throws Exception{
+
+        Document xmldoc = null;
         try {
-            XMLDecoder ulaz = new XMLDecoder(new FileInputStream("drzave.xml"));
-            un = (UN) ulaz.readObject();
-            ulaz.close();
+            DocumentBuilder docReader = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            xmldoc = docReader.parse(new File("drzave.xml"));
         } catch (Exception e) {
-            System.out.println("Greška: " + e);
+            throw e;
         }
 
-        if (un == null) { // Treba li ovo
-            return null;
-        }
-        for (Drzava d : un.getDrzave()) {
-            for (Grad g : gradovi) {
-                if (g.getNaziv().equals(d.getGlavniGrad().getNaziv())) {
-                    d.getGlavniGrad().setTemperature(g.getTemperature());
+
+        UN un = null;
+        ArrayList<Drzava> drzave = new ArrayList<Drzava>();
+        NodeList nodeList = xmldoc.getElementsByTagName("drzava");
+
+        for(int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == 1) {
+                Element elem = (Element) node;
+                Drzava drzava = new Drzava();
+                drzava.setBrojStanovnika(Integer.parseInt(elem.getAttribute("stanovnika")));
+                drzava.setNaziv(elem.getElementsByTagName("naziv").item(0).getTextContent());
+                drzava.setJedinicaZaPovrsinu(
+                        elem.getElementsByTagName("povrsina").item(0).getAttributes().getNamedItem("jedinica").getTextContent());
+                drzava.setPovrsina(Double.parseDouble(elem.getElementsByTagName("povrsina").item(0).getTextContent()));
+
+                System.out.println("Stanovnistvo: " + elem.getAttribute("stanovnika"));
+                System.out.println("Naziv drzave: " + elem.getElementsByTagName("naziv").item(0).getTextContent());
+                System.out.println("Povrsina: " + elem.getElementsByTagName("povrsina").item(0).getTextContent());
+                System.out.println("Jedinica za povrsninu: " +
+                        elem.getElementsByTagName("povrsina").item(0).getAttributes().getNamedItem("jedinica").getTextContent());
+                System.out.println("Moneta: " +
+                        elem.getElementsByTagName("moneta").item(0).getAttributes().getNamedItem("naziv").getTextContent());
+
+                NodeList lista = elem.getElementsByTagName("glavnigrad");
+                Node noda1 = lista.item(0);
+                if (noda1.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element1 = (Element) noda1;
+
+                    Grad grad = new Grad();
+                    grad.setNaziv(element1.getElementsByTagName("naziv").item(0).getTextContent());
+                    grad.setBrojStanovnika(Integer.parseInt(element1.getAttribute("stanovnika")));
+
+                    for (Grad g : gradovi) {
+                        if (g.getNaziv().equals(grad.getNaziv())) {
+                            grad.setTemperature(g.getTemperature());
+                            grad.setTemperature(g.getTemperature());
+                            System.out.println("Temperature: ");
+                            Double[] nizTemperatura = g.getTemperature();
+                            for (int j = 0; j < nizTemperatura.length; j++) {
+                                if (nizTemperatura[j] != 0) {
+                                    System.out.print(nizTemperatura[j] + " ");
+                                }
+                            }
+                        }
+                    }
+
+                    drzava.setGlavniGrad(grad);
+                    System.out.println("Glavni grad: " + element1.getElementsByTagName("naziv").item(0).getTextContent());
+                    System.out.println("Stanovnistvo: " + element1.getAttribute("stanovnika"));
                 }
+                drzave.add(drzava);
             }
         }
+
+        un.setDrzave(drzave);
         return un;
     }
 
@@ -103,7 +162,7 @@ public class Tutorijal {
             izlaz.writeObject(un);
             izlaz.close();
         } catch(Exception e) {
-            System.out.println("Greška: " + e);
+            System.out.println("Greška1: " + e);
         }
     }
 }

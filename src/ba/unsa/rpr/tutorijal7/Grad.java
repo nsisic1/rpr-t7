@@ -8,33 +8,33 @@ public class Grad implements Serializable {
     private int brojStanovnika;
     private Double[] temperature;
 
-    Grad() {
+    public Grad() {
         naziv = "";
         brojStanovnika = 0;
         temperature = new Double[1000];
     }
 
-    String getNaziv() {
+    public String getNaziv() {
         return naziv;
     }
 
-    void setNaziv(String naziv) {
+    public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
 
-    int getBrojStanovnika() {
+    public int getBrojStanovnika() {
         return brojStanovnika;
     }
 
-    void setBrojStanovnika(int brojStanovnika) {
+    public void setBrojStanovnika(int brojStanovnika) {
         this.brojStanovnika = brojStanovnika;
     }
 
-    Double[] getTemperature() {
+    public Double[] getTemperature() {
         return temperature;
     }
 
-    void setTemperature(Double[] temperature) {
+    public void setTemperature(Double[] temperature) {
         this.temperature = temperature;
     }
 }

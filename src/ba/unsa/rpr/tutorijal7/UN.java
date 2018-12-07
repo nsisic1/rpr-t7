@@ -7,15 +7,15 @@ public class UN implements Serializable {
 
     private ArrayList<Drzava> drzave;
 
-    UN() {
+    public UN() {
         drzave = new ArrayList<>();
     }
 
-    ArrayList<Drzava> getDrzave() {
+    public ArrayList<Drzava> getDrzave() {
         return drzave;
     }
 
-    void setDrzave(ArrayList<Drzava> drzave) {
+    public void setDrzave(ArrayList<Drzava> drzave) {
         this.drzave = drzave;
     }
 }

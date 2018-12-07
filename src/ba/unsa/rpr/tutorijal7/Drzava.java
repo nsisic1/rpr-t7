@@ -10,50 +10,50 @@ public class Drzava implements Serializable {
     private String jedinicaZaPovrsinu;
     private Grad glavniGrad;
 
-    Drzava() {
+    public Drzava() {
         naziv = "";
         brojStanovnika = 0;
         povrsina = (double) 0;
         jedinicaZaPovrsinu = "";
     }
 
-    String getNaziv() {
+    public String getNaziv() {
         return naziv;
     }
 
-    void setNaziv(String naziv) {
+    public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
 
-    int getBrojStanovnika() {
+    public int getBrojStanovnika() {
         return brojStanovnika;
     }
 
-    void setBrojStanovnika(int brojStanovnika) {
+    public void setBrojStanovnika(int brojStanovnika) {
         this.brojStanovnika = brojStanovnika;
     }
 
-    Double getPovrsina() {
+    public Double getPovrsina() {
         return povrsina;
     }
 
-    void setPovrsina(Double povrsina) {
+    public void setPovrsina(Double povrsina) {
         this.povrsina = povrsina;
     }
 
-    String getJedinicaZaPovrsinu() {
+    public String getJedinicaZaPovrsinu() {
         return jedinicaZaPovrsinu;
     }
 
-    void setJedinicaZaPovrsinu(String jedinicaZaPovrsinu) {
+    public void setJedinicaZaPovrsinu(String jedinicaZaPovrsinu) {
         this.jedinicaZaPovrsinu = jedinicaZaPovrsinu;
     }
 
-    Grad getGlavniGrad() {
+    public Grad getGlavniGrad() {
         return glavniGrad;
     }
 
-    void setGlavniGrad(Grad glavniGrad) {
+    public void setGlavniGrad(Grad glavniGrad) {
         this.glavniGrad = glavniGrad;
     }
 }

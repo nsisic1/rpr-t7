@@ -1,4 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_101" class="java.beans.XMLDecoder">
- <null/>
+ <object class="ba.unsa.rpr.tutorijal7.UN" id="UN0">
+  <void property="drzave">
+   <void method="add">
+    <object class="ba.unsa.rpr.tutorijal7.Drzava">
+     <void property="brojStanovnika">
+      <int>3500000</int>
+     </void>
+     <void property="glavniGrad">
+      <object class="ba.unsa.rpr.tutorijal7.Grad">
+       <void property="brojStanovnika">
+        <int>400000</int>
+       </void>
+       <void property="naziv">
+        <string>Sarajevo</string>
+       </void>
+       <void property="temperature">
+        <array class="java.lang.Double" length="5">
+         <void index="0">
+          <double>5.4</double>
+         </void>
+         <void index="1">
+          <double>15.8</double>
+         </void>
+         <void index="2">
+          <double>2.3</double>
+         </void>
+         <void index="3">
+          <double>0.44</double>
+         </void>
+         <void index="4">
+          <double>-1.1</double>
+         </void>
+        </array>
+       </void>
+      </object>
+     </void>
+     <void property="jedinicaZaPovrsinu">
+      <string>km2</string>
+     </void>
+     <void property="naziv">
+      <string>Bosna i Hercegovina</string>
+     </void>
+     <void property="povrsina">
+      <double>51129.0</double>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ba.unsa.rpr.tutorijal7.Drzava">
+     <void property="brojStanovnika">
+      <int>7022000</int>
+     </void>
+     <void property="glavniGrad">
+      <object class="ba.unsa.rpr.tutorijal7.Grad">
+       <void property="brojStanovnika">
+        <int>1374000</int>
+       </void>
+       <void property="naziv">
+        <string>Beograd</string>
+       </void>
+      </object>
+     </void>
+     <void property="jedinicaZaPovrsinu">
+      <string>km2</string>
+     </void>
+     <void property="naziv">
+      <string>Srbija</string>
+     </void>
+     <void property="povrsina">
+      <double>74129.0</double>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ba.unsa.rpr.tutorijal7.Drzava">
+     <void property="brojStanovnika">
+      <int>7441000</int>
+     </void>
+     <void property="glavniGrad">
+      <object class="ba.unsa.rpr.tutorijal7.Grad">
+       <void property="brojStanovnika">
+        <int>1609000</int>
+       </void>
+       <void property="naziv">
+        <string>Barcelona</string>
+       </void>
+      </object>
+     </void>
+     <void property="jedinicaZaPovrsinu">
+      <string>km2</string>
+     </void>
+     <void property="naziv">
+      <string>Katalonija</string>
+     </void>
+     <void property="povrsina">
+      <double>32108.0</double>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
 </java>

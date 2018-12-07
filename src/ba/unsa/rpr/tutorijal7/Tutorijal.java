@@ -18,18 +18,6 @@ import java.util.Scanner;
 public class Tutorijal {
 
     public static void main(String[] args) {
-        /*ArrayList<Grad> gradovi;
-        try {
-            gradovi = ucitajGradove();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        for (Grad g: gradovi) {
-            System.out.println(g);
-        }*/
-
         try {
             zapisiXml(ucitajXml(ucitajGradove()));
             System.out.println("Uspjeh!");
@@ -87,7 +75,7 @@ public class Tutorijal {
         return count;
     }
 
-    public static UN ucitajXml(ArrayList<Grad> gradovi) throws Exception{
+    static UN ucitajXml(ArrayList<Grad> gradovi) throws Exception{
 
         Document xmldoc = null;
         try {
@@ -98,56 +86,54 @@ public class Tutorijal {
         }
 
 
-        UN un = null;
+        UN un = new UN();
         ArrayList<Drzava> drzave = new ArrayList<Drzava>();
-        NodeList nodeList = xmldoc.getElementsByTagName("drzava");
+        NodeList nodes = xmldoc.getDocumentElement().getChildNodes();
 
-        for(int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            if (node.getNodeType() == 1) {
+        for(int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node instanceof Element) {
                 Element elem = (Element) node;
                 Drzava drzava = new Drzava();
                 drzava.setBrojStanovnika(Integer.parseInt(elem.getAttribute("stanovnika")));
                 drzava.setNaziv(elem.getElementsByTagName("naziv").item(0).getTextContent());
                 drzava.setJedinicaZaPovrsinu(
-                        elem.getElementsByTagName("povrsina").item(0).getAttributes().getNamedItem("jedinica").getTextContent());
+                    elem.getElementsByTagName("povrsina").item(0).getAttributes().getNamedItem("jedinica").getTextContent());
                 drzava.setPovrsina(Double.parseDouble(elem.getElementsByTagName("povrsina").item(0).getTextContent()));
 
-                System.out.println("Stanovnistvo: " + elem.getAttribute("stanovnika"));
                 System.out.println("Naziv drzave: " + elem.getElementsByTagName("naziv").item(0).getTextContent());
+                System.out.println("Stanovnistvo: " + elem.getAttribute("stanovnika"));
                 System.out.println("Povrsina: " + elem.getElementsByTagName("povrsina").item(0).getTextContent());
                 System.out.println("Jedinica za povrsninu: " +
                         elem.getElementsByTagName("povrsina").item(0).getAttributes().getNamedItem("jedinica").getTextContent());
                 System.out.println("Moneta: " +
                         elem.getElementsByTagName("moneta").item(0).getAttributes().getNamedItem("naziv").getTextContent());
 
-                NodeList lista = elem.getElementsByTagName("glavnigrad");
-                Node noda1 = lista.item(0);
-                if (noda1.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element1 = (Element) noda1;
 
+                Node nodeGrad = elem.getElementsByTagName("glavnigrad").item(0);
+                if (nodeGrad.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elementGrad = (Element) nodeGrad;
                     Grad grad = new Grad();
-                    grad.setNaziv(element1.getElementsByTagName("naziv").item(0).getTextContent());
-                    grad.setBrojStanovnika(Integer.parseInt(element1.getAttribute("stanovnika")));
+                    grad.setNaziv(elementGrad.getElementsByTagName("naziv").item(0).getTextContent());
+                    grad.setBrojStanovnika(Integer.parseInt(elementGrad.getAttribute("stanovnika")));
+                    drzava.setGlavniGrad(grad);
+
+                    System.out.println("Glavni grad: " + grad.getNaziv());
+                    System.out.println("Stanovnistvo: " + grad.getBrojStanovnika());
 
                     for (Grad g : gradovi) {
                         if (g.getNaziv().equals(grad.getNaziv())) {
                             grad.setTemperature(g.getTemperature());
-                            grad.setTemperature(g.getTemperature());
-                            System.out.println("Temperature: ");
+                            System.out.print("Temperature: ");
                             Double[] nizTemperatura = g.getTemperature();
-                            for (int j = 0; j < nizTemperatura.length; j++) {
-                                if (nizTemperatura[j] != 0) {
-                                    System.out.print(nizTemperatura[j] + " ");
-                                }
+                            for (Double d : nizTemperatura) {
+                                System.out.print(d + " ");
                             }
                         }
                     }
 
-                    drzava.setGlavniGrad(grad);
-                    System.out.println("Glavni grad: " + element1.getElementsByTagName("naziv").item(0).getTextContent());
-                    System.out.println("Stanovnistvo: " + element1.getAttribute("stanovnika"));
                 }
+                System.out.println();
                 drzave.add(drzava);
             }
         }
@@ -158,11 +144,11 @@ public class Tutorijal {
 
     public static void zapisiXml(UN un) {
         try {
-            XMLEncoder izlaz = new XMLEncoder(new FileOutputStream("un.xml"));
+            XMLEncoder izlaz = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("un.xml")));
             izlaz.writeObject(un);
             izlaz.close();
         } catch(Exception e) {
-            System.out.println("Greška1: " + e);
+            System.out.println("Greska4: " + e);
         }
     }
 }
